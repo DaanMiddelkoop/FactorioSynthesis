@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use grid::Grid;
 use position::Position;
 use recipes::Recipe;
@@ -25,11 +27,10 @@ fn main() {
     // let position = Position::new(0, 0, rotation::Rotation::North);
     // println!("Backwards: {:?}, forwards: {:?}, left: {:?}, right: {:?}", position.backward(), position.forward(), position.rotate_left(), position.rotate_right());
 
-    // let grid = tree_generator::generate_recipe(Recipe::SmallElectricMotor, 5.0);
+    let blueprint = tree_generator::generate_recipe(Recipe::FastInserter, 3.0);
+    println!("blueprint: {}", blueprint);
 
-    // println!("blueprint: {}", grid.to_blueprint());
-
-    let system = SpringSystem::new(Recipe::FastInserter, 30.0);
-    system.partial_blueprint();
+    // let system = SpringSystem::new(Recipe::FastInserter, 30.0);
+    // system.partial_blueprint();
 
 }

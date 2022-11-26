@@ -40,7 +40,7 @@ impl Astar {
 
         while let Some((node, f)) = open_list.pop() {
             let successor_cost = gs.get(&node).unwrap() + 1;
-            if successor_cost > 5000 {
+            if successor_cost > 500 {
                 return None;
             }
 
