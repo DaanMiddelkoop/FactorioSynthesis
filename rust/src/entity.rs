@@ -8,14 +8,16 @@ use serde_json;
 use crate::bounds::Bounds;
 use crate::building::Building;
 use crate::building::Building::*;
+use crate::position::Position;
+use crate::rotation::Rotation;
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Clone, PartialEq, Eq, Hash, Debug)]
 pub struct EntityPosition {
     pub x: isize,
     pub y: isize,
 }
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Clone, PartialEq, Eq, Hash, Debug)]
 pub struct Entity {
     pub entity_number: usize,
     pub name: String,
@@ -54,6 +56,21 @@ impl Entity {
             max_y: self.position.y - t + h,
         }
     }
+
+    pub fn set_position(&mut self, mut position: Position) {
+        match self.building {
+            Building::Inserter => { 
+                self.position.x = position.x;
+                self.position.y = position.y;
+                self.direction = position.rotate_left().rotate_left().rotation.assemble(); }
+
+            _ => {
+                self.position.x = position.x;
+                self.position.y = position.y;
+                self.direction = position.rotation.assemble();
+            }
+        }
+    }
 }
 
 #[derive(Serialize)]
@@ -74,6 +91,7 @@ impl Blueprint {
 
     pub fn serialize(&self) -> String {
         let body = String::from("{\"blueprint\": ") + serde_json::to_string(self).unwrap().as_str() + "}";
+        // println!("body: {}", body);
         let mut e = ZlibEncoder::new(Vec::new(), Compression::default());
         e.write_all(body.as_bytes()).unwrap();
         let compressed = e.finish().unwrap();

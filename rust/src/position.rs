@@ -18,6 +18,14 @@ impl Position {
         }
     }
 
+    pub fn north(x: isize, y: isize) -> Self {
+        Position {
+            x,
+            y,
+            rotation: Rotation::North,
+        }
+    }
+
     pub fn move_rel(&self, x: isize, y: isize) -> Self {
         Position {
             x: self.x + x,
@@ -54,10 +62,19 @@ impl Position {
 
     pub fn forward(&self) -> Self {
         match self.rotation {
-            Rotation::North => self.move_rel(0, 1),
+            Rotation::North => self.move_rel(0, -1),
             Rotation::East => self.move_rel(1, 0),
-            Rotation::South => self.move_rel(0, -1),
+            Rotation::South => self.move_rel(0, 1),
             Rotation::West => self.move_rel(-1, 0)
+        }
+    }
+
+    pub fn backward(&self) -> Self {
+        match self.rotation {
+            Rotation::North => self.move_rel(0, 1),
+            Rotation::East => self.move_rel(-1, 0),
+            Rotation::South => self.move_rel(0, -1),
+            Rotation::West => self.move_rel(1, 0)
         }
     }
 }

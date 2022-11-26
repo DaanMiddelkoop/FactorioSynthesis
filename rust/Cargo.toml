@@ -11,3 +11,4 @@ serde = { version = "1.0.147", features = ["derive"] }
 flate2 = "1.0.24"
 base64 = "0.13.1"
 priority-queue = "1.3.0"
+rand = "0.7.2"

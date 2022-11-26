@@ -2,7 +2,7 @@ use crate::position::Position;
 
 
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Hash, Debug)]
 pub enum Building {
     Assembler(String),
     Furnace,

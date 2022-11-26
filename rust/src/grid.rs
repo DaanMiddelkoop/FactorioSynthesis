@@ -27,6 +27,10 @@ impl Grid {
         }
     }
 
+    pub fn entity_amount(&self) -> usize {
+        self.entities.len()
+    }
+
     pub fn set_output(&mut self, output: Position) {
         self.output = Some(output);
     }
@@ -170,7 +174,6 @@ impl Grid {
         self.entities.push(other);
     }
 
-
     pub fn place_belts(&mut self, height: isize, x_offset: isize, rotation: Rotation, amount: isize) {
         let mut entity = Entity::from(Building::Belt);
         
@@ -261,6 +264,11 @@ impl Grid {
             println!("Failed blueprint part: {}", self.to_blueprint());
             panic!()
         }
+    }
+
+    pub fn is_free(&self, mut position: Position) -> bool {
+        position.rotation = Rotation::North;
+        return !self.reserved.contains(&position);
     }
 
 
